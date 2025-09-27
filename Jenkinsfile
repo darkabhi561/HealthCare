@@ -43,6 +43,59 @@ pipeline {
             }
         }
         
+         stage('Build Backend') {
+            steps {
+                dir('backend') {
+                    sh 'docker build -t $BACKEND_IMAGE .'
+                }
+            }
+        }
+        
+       stage('Run Backend') {
+            steps {
+                sh '''
+                docker run -d --name $BACKEND_CONTAINER \
+                  --network $NET \
+                  -e DATABASE_HOST=$DATABASE_CONTAINER \
+                  -e DATABASE_USER=qbuser \
+                  -e DATABASE_PASSWORD=$qbpass \
+                  -e DATABASE_NAME=$qbhealth \
+                  $BACKEND_IMAGE
+                '''
+            }
+        }
+      
+       stage('Run Frontend') {
+            steps {
+                sh '''
+                docker run -d --name $FRONTEND_CONTAINER \
+                  --network $NET \
+                  -p $FRONTEND_PORT:80 \
+                  -v "$WORKSPACE/frontend/index.html":/usr/share/nginx/html/index.html:ro \
+                  nginx:latest
+                '''
+            }
+        }
+        
+        
+         stage('Verify') {
+            steps {
+                sh '''
+                sleep 6
+                curl -f http://localhost:$FRONTEND_PORT || (echo "App not responding" && exit 1)
+                '''
+            }
+        }
+      
+       post {
+        success {
+            echo "✅ Deployment SUCCESS: Access app at http://<EC2-PUBLIC-IP>:$FRONTEND_PORT"
+        }
+        failure {
+            echo "❌ Deployment FAILED. Debug with docker logs."
+            sh 'docker ps -a'
+        }
+    }
         
      }
     
