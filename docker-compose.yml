@@ -1,0 +1,67 @@
+version: "3.9"
+
+networks:
+  health-care:
+
+
+services:
+
+  db:
+    image: postgres:16
+    container_name: health-contain
+    environment:
+      POSTGRES_USER: qbuser
+      POSTGRES_PASSWORD: qbpass
+      POSTGRES_DB: qbhealth
+    volumes:
+      - health-vol:/var/lib/postgresql/data
+      - ./db:/docker-entrypoint-initdb.d
+    networks:
+      - health-care
+
+    restart: always
+
+
+  backend:
+
+    build: ./backend
+    container_name: health-backend
+    environment:
+       DATABASE_HOST: health-contain
+       DATABASE_USER: qbuser
+       DATABASE_PASSWORD: qbpass
+       DATABASE_NAME: qbhealth
+
+
+    depends_on:
+       - db
+    ports:
+      - "5000:5000"
+    networks:
+      - health-care
+
+    restart: always
+
+
+  frontend:
+    image: nginx:latest
+    container_name: health-front
+    ports:
+      - "3000:80"
+
+    volumes:
+         - /home/ubuntu/docker/HealthCare/frontend/static/:/usr/share/nginx/html/
+
+    depends_on:
+
+      - backend
+
+    networks:
+
+      - health-care
+
+    restart: always
+
+
+volumes:
+   health-vol:
