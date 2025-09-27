@@ -82,7 +82,7 @@ pipeline {
             steps {
                 sh '''
                 sleep 6
-                curl -f http://13.235.20.6:$FRONTEND_PORT || (echo "App not responding" && exit 1)
+                curl -f http://65.2.180.93:$FRONTEND_PORT || (echo "App not responding" && exit 1)
                 '''
             }
         }
