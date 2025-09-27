@@ -37,7 +37,7 @@ pipeline {
                   -e POSTGRES_PASSWORD=$DATABASE_PASSWORD \
                   -e POSTGRES_DB=$DATABASE_NAME \
                   -v health-vol:/var/lib/postgresql/data \
-                  -v "$WORKSPACE/db:/docker-entrypoint-initdb.d \
+                  -v "$WORKSPACE/db":/docker-entrypoint-initdb.d \
                   postgres:16
                 '''
             }
