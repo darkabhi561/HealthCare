@@ -9,7 +9,7 @@ This repository contains a minimal, working 3-tier healthcare demo:
 
 
 
-Run locally:
+Run locally
 1. Install Docker & Docker Compose.
 2. From repo root run: `docker compose up --build`
 3. Frontend: http://localhost:3000  (nginx)
