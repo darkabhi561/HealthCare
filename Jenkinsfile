@@ -71,7 +71,7 @@ pipeline {
                 docker run -d --name $FRONTEND_CONTAINER \
                   --network $NET \
                   -p $FRONTEND_PORT:80 \
-                  -v "$WORKSPACE/frontend/index.html":/usr/share/nginx/html/index.html \
+                  -v "$WORKSPACE/frontend/static/index.html":/usr/share/nginx/html/index.html \
                   nginx:latest
                 '''
             }
