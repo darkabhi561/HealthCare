@@ -82,7 +82,7 @@ pipeline {
             steps {
                 sh '''
                 sleep 6
-                curl -f http://localhost:$FRONTEND_PORT || (echo "App not responding" && exit 1)
+                curl -f http://13.235.20.6:$FRONTEND_PORT || (echo "App not responding" && exit 1)
                 '''
             }
         }
@@ -91,7 +91,7 @@ pipeline {
       
        post {
         success {
-            echo "✅ Deployment SUCCESS: Access app at http://<EC2-PUBLIC-IP>:$FRONTEND_PORT"
+            echo "Deployment SUCCESS"
         }
         failure {
             echo "❌ Deployment FAILED. Debug with docker logs."
