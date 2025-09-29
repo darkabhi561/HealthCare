@@ -68,9 +68,8 @@
       </aside>
     </div>
   </div>
-
 <script>
-const base = window.location.origin.replace(':3000', ':5000');
+const base = ''; // Use relative paths, backend must be served from the same host or proxied
 
 async function fetchJSON(path) {
   const url = base + path;
@@ -146,5 +145,4 @@ function hideNewAppt(){ /* noop for demo */ }
 
 load();
 </script>
-</body>
-</html>
+
