@@ -7,7 +7,7 @@ pipeline {
          BACKEND_CONTAINER = "health-backend"
          FRONTEND_CONTAINER = "health-front"
          BACKEND_IMAGE = "healthcare-backend:${BUILD_NUMBER}"
-         FRONTED_PORT = "3000"
+         FRONTNED_PORT = "3000"
          DATABASE_PASSWORD= "qbpass"
          DATABASE_NAME= "qbhealth"
      }
