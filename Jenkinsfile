@@ -54,13 +54,15 @@ pipeline {
        stage('Run Backend') {
             steps {
                 sh '''
-                docker run -d --name $BACKEND_CONTAINER \
-                  --network $NET \
-                  -e DATABASE_HOST=$DATABASE_CONTAINER \
-                  -e DATABASE_USER=qbuser \
-                  -e DATABASE_PASSWORD=$qbpass \
-                  -e DATABASE_NAME=$qbhealth \
-                  $BACKEND_IMAGE
+               docker run -d --name $BACKEND_CONTAINER \
+                 --network $NET \
+                -p 5000:5000 \
+                -e DATABASE_HOST=$DATABASE_CONTAINER \
+                -e DATABASE_USER=qbuser \
+                -e DATABASE_PASSWORD=$DATABASE_PASSWORD \
+               -e DATABASE_NAME=$DATABASE_NAME \
+                $BACKEND_IMAGE
+
                 '''
             }
         }
