@@ -84,7 +84,7 @@ pipeline {
             steps {
                 sh '''
                 sleep 6
-                curl -f http://13.233.93.69:5000 || (echo "App not responding" && exit 1)
+                curl -f http://13.233.93.69:3000 || (echo "App not responding" && exit 1)
                 '''
             }
         }
