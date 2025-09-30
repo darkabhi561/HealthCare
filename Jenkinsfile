@@ -1,5 +1,5 @@
 pipeline {
-     agent Dev
+     agent { label "Dev" }
      
      environment {
          NET = "health-care"
